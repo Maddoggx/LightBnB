@@ -1,6 +1,14 @@
--- 
-SELECT count(assistance_requests.*) as total_assistances, teachers.name
-FROM assistance_requests
-JOIN teachers ON teachers.id = teacher_id
-WHERE name = 'Waylon Boehm'
-GROUP BY teachers.name;
+-- SELECT properties.city as city, count(reservations.property_id) as total_reservations
+-- FROM reservations 
+-- JOIN properties ON properties.id = property_id 
+-- GROUP BY properties.city
+-- ORDER BY count(reservations.property_id) DESC;
+
+SELECT reservations.id, properties.title, properties.cost_per_night, reservations.start_date, avg(rating) as average_rating
+FROM reservations
+JOIN properties ON reservations.property_id = properties.id
+JOIN property_reviews ON properties.id = property_reviews.property_id
+WHERE reservations.guest_id = 1
+GROUP BY properties.id, reservations.id
+ORDER BY reservations.start_date
+LIMIT 10;
